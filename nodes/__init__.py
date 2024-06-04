@@ -40,6 +40,11 @@ def create_app(test_config: dict[str, str] | None = None):
 
     try:
         db = Database(app.logger, config["DATABASE"])
+    except Exception as e:
+        app.logger.error("An error occurred while creating the nodes app: %s", e)
+        sys.exit(1)
+
+    try:
         nodes_repository = NodesRepository(app.logger, db.get_connection())
 
         migration = app.open_resource("sql/schema.sql")
@@ -60,6 +65,7 @@ def create_app(test_config: dict[str, str] | None = None):
         app.register_blueprint(nodes_routes.get_blueprint())
     except Exception as e:
         app.logger.error("An error occurred while creating the nodes app: %s", e)
+        db.close()
         sys.exit(1)
 
     return app
