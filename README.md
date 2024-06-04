@@ -18,7 +18,7 @@ The project uses sqlite, so the only requirement is:
 - `$ black .`
 
 ## Linting
-- `$ pylint nodes`
+- `$ pylint nodes tests`
 
 ## Running the application
 - `$ flask --app nodes run --debug`

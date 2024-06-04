@@ -47,11 +47,8 @@ def create_app(test_config: dict[str, str] | None = None):
     try:
         nodes_repository = NodesRepository(app.logger, db.get_connection())
 
-        migration = app.open_resource("sql/schema.sql")
-        seed = app.open_resource("sql/data.sql")
-
-        nodes_repository.migrate_or_seed(migration)
-        nodes_repository.migrate_or_seed(seed)
+        nodes_repository.migrate_or_seed(app.open_resource("sql/schema.sql"))
+        nodes_repository.migrate_or_seed(app.open_resource("sql/data.sql"))
 
         nodes_service = NodesService(app.logger, nodes_repository)
 
