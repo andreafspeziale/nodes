@@ -24,6 +24,7 @@ class Database:
             raise DatabaseOpenConnectionException(
                 "An error occurred while establishing database connection"
             ) from e
+
     def get_connection(self, database_path: Optional[str] = None) -> Connection:
         self.logger.debug("Retrieving database connection...")
         try:
