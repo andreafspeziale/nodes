@@ -1,5 +1,5 @@
 import os
-
+import sys
 from typing import TypedDict, cast
 from flask import Flask
 from .database import Database
@@ -38,24 +38,28 @@ def create_app(test_config: dict[str, str] | None = None):
 
     config: Config = cast(Config, app.config)
 
-    db = Database(app.logger, config["DATABASE"])
-    nodes_repository = NodesRepository(app.logger, db.get_connection())
+    try:
+        db = Database(app.logger, config["DATABASE"])
+        nodes_repository = NodesRepository(app.logger, db.get_connection())
 
-    migration = app.open_resource("sql/schema.sql")
-    seed = app.open_resource("sql/data.sql")
+        migration = app.open_resource("sql/schema.sql")
+        seed = app.open_resource("sql/data.sql")
 
-    nodes_repository.migrate_or_seed(migration)
-    nodes_repository.migrate_or_seed(seed)
+        nodes_repository.migrate_or_seed(migration)
+        nodes_repository.migrate_or_seed(seed)
 
-    nodes_service = NodesService(app.logger, nodes_repository)
+        nodes_service = NodesService(app.logger, nodes_repository)
 
-    list_nodes_schema = ListNodesSchema(
-        app.config["VALID_LANGUAGES"],
-        app.config["DEFAULT_PAGE_NUMBER"],
-        app.config["DEFAULT_PAGE_SIZE"],
-    )
+        list_nodes_schema = ListNodesSchema(
+            app.config["VALID_LANGUAGES"],
+            app.config["DEFAULT_PAGE_NUMBER"],
+            app.config["DEFAULT_PAGE_SIZE"],
+        )
 
-    nodes_routes = NodesRoutes(app.logger, list_nodes_schema, nodes_service)
-    app.register_blueprint(nodes_routes.get_blueprint())
+        nodes_routes = NodesRoutes(app.logger, list_nodes_schema, nodes_service)
+        app.register_blueprint(nodes_routes.get_blueprint())
+    except Exception as e:
+        app.logger.error("An error occurred while creating the nodes app: %s", e)
+        sys.exit(1)
 
     return app

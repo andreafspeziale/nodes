@@ -1,6 +1,5 @@
-from typing import TypedDict, cast
+from typing import TypedDict, cast, IO
 from logging import Logger
-from typing import IO
 from sqlite3 import Connection
 
 
@@ -37,7 +36,9 @@ class NodesRepository:
                 self.connection.executescript(f.read().decode("utf8"))
         except Exception as e:
             self.logger.error("Error while running database migration etc.: %s", e)
-            raise MigrateOrSeedRepositoryException(e)
+            raise MigrateOrSeedRepositoryException(
+                "Error while running database migration etc."
+            ) from e
 
     def list_nodes(self, node_id: int, params: ListNodesSearchParams):
         self.logger.debug("Retrieving nodes list...")
@@ -68,6 +69,7 @@ class NodesRepository:
             self.logger.error(
                 "An error occurred while retrieving nodes list from database: %s", e
             )
-            raise ListNodesRepositoryException(e)
-        else:
-            return nodes
+            raise ListNodesRepositoryException(
+                "An error occurred while retrieving nodes list from database"
+            ) from e
+        return nodes

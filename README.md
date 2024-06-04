@@ -17,6 +17,9 @@ The project uses sqlite, so the only requirement is:
 ## Formatting
 - `$ black .`
 
+## Linting
+- `$ pylint nodes`
+
 ## Running the application
 - `$ flask --app nodes run --debug`
 

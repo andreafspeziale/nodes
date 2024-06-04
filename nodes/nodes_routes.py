@@ -17,7 +17,7 @@ class NodesRoutes:
         self, logger, list_nodes_schema: ListNodesSchema, nodes_service: NodesService
     ):
         self.logger = logger
-        self.list_nodes_schema = list_nodes_schema
+        self.list_nodes_schema = list_nodes_schema.build()
         self.nodes_service = nodes_service
         self.blueprint = Blueprint("my_routes", __name__)
         self.register_routes()
@@ -27,7 +27,7 @@ class NodesRoutes:
 
     def register_routes(self):
         @self.blueprint.route("/api/nodes/<int:node_id>/children")
-        @use_args(self.list_nodes_schema.get_schema(), location="querystring")
+        @use_args(self.list_nodes_schema, location="querystring")
         def nodes(args: ListNodesArgs, node_id: int):
             try:
                 self.logger.debug("Retrieving nodes list...")
@@ -55,5 +55,4 @@ class NodesRoutes:
             messages = err.data.get("messages", ["Invalid request."])
             if headers:
                 return jsonify({"errors": messages}), err.code, headers
-            else:
-                return jsonify({"errors": messages}), err.code
+            return jsonify({"errors": messages}), err.code

@@ -1,3 +1,4 @@
+from dataclasses import dataclass
 from typing import TypedDict
 from logging import Logger
 from .nodes_repository import NodesRepository
@@ -14,10 +15,10 @@ class ListNodesServiceException(Exception):
     pass
 
 
+@dataclass
 class NodesService:
-    def __init__(self, logger: Logger, nodes_repository: NodesRepository):
-        self.logger = logger
-        self.nodes_repository = nodes_repository
+    logger: Logger
+    nodes_repository: NodesRepository
 
     def list_nodes(self, node_id: int, params: ListNodesParams):
         self.logger.debug("Retrieving nodes list...")
@@ -25,6 +26,7 @@ class NodesService:
             nodes = self.nodes_repository.list_nodes(node_id, params)
         except Exception as e:
             self.logger.error("An error occurred while retrieving nodes list: %s", e)
-            raise ListNodesServiceException(e)
-        else:
-            return nodes
+            raise ListNodesServiceException(
+                "An error occurred while retrieving nodes list"
+            ) from e
+        return nodes
