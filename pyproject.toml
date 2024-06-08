@@ -1,0 +1,3 @@
+[tool.semantic_release]
+version_variables = ["setup.py:__version__"]
+commit_message = "chore: release v{version}"
