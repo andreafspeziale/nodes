@@ -19,7 +19,7 @@ The project uses sqlite, so the only requirement is:
 ```sh
 $ python3 -m venv .venv
 $ source .venv/bin/activate
-$ pip install -r requirements-dev.txt -r requirements.txt
+$ pip install -r requirements-dev.txt
 $ pre-commit install
 $ flask --app nodes run --debug
 ```
