@@ -10,6 +10,7 @@ The project uses sqlite, so the only requirement is:
 - `$ python3 -m venv .venv`
 - `$ source .venv/bin/activate`
 - `$ pip install -r requirements-dev.txt`
+- `$ pre-commit install`
 
 ## Type checking
 - `$ mypy`

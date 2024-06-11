@@ -1,0 +1,22 @@
+repos:
+- repo: https://github.com/commitizen-tools/commitizen
+  rev: v3.27.0
+  hooks:
+    - id: commitizen
+      stages: [commit-msg]
+-   repo: local
+    hooks:
+    -   id: pylint
+        name: pylint
+        entry: pylint
+        language: system
+        types: [python]
+        require_serial: true
+        stages: [pre-commit]
+    -   id: black
+        name: black
+        entry: black
+        language: system
+        types: [python]
+        args: [--check]
+        stages: [pre-commit]
