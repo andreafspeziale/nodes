@@ -1,0 +1,27 @@
+name: Test
+on:
+  push:
+    branches: [develop, main]
+  pull_request:
+    branches: [develop, main]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10.5'
+          cache: 'pip'
+      - name: Install dependencies
+        run: pip install -r requirements-dev.txt -r requirements.txt
+      - name: Type checking
+        run: mypy
+      - name: Formatting check
+        run: black . --check
+      - name: Lint check
+        run: pylint nodes tests
+      - name: Test
+        run: pytest
