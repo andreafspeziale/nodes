@@ -9,7 +9,7 @@ The project uses sqlite, so the only requirement is:
 ## Setup
 - `$ python3 -m venv .venv`
 - `$ source .venv/bin/activate`
-- `$ pip install -r requirements-dev.txt`
+- `$ pip install -r requirements-dev.txt -r requirements.txt`
 - `$ pre-commit install`
 
 ## Type checking
