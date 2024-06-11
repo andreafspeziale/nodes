@@ -31,7 +31,7 @@ $ flask --app nodes run --debug
 ```sh
 $ mypy               # type check
 $ black .            # formatting
-$ pylint nodes tests #linting
+$ pylint nodes tests # linting
 $ pytest             # tests
 ```
 
