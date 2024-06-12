@@ -4,8 +4,11 @@ Minimal Flask API to explore a nested set model.
 
 Check the challenge in the `docs` folder.
 
-![Test](https://github.com/andreafspeziale/nodes/actions/workflows/test.yml/badge.svg)
+![Release)](https://img.shields.io/github/v/release/andreafspeziale/nodes)
 ![License: MIT](https://img.shields.io/github/license/andreafspeziale/nodes.svg)
+![Test](https://github.com/andreafspeziale/nodes/actions/workflows/test.yml/badge.svg)
+![Docker](https://github.com/andreafspeziale/nodes/actions/workflows/docker-build-and-push.yml/badge.svg)
+
 
 
 ## Requirements
