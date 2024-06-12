@@ -19,6 +19,7 @@ jobs:
       - name: Release
         uses: python-semantic-release/python-semantic-release@master
         with:
+          root_options: "--config releaserc.toml"
           git_committer_name: ${{ secrets.CI_GITHUB_USER }}
           git_committer_email: ${{ secrets.CI_GITHUB_EMAIL }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
