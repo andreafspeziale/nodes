@@ -19,7 +19,6 @@ class Config(TypedDict):
 def create_app(test_config: dict[str, str] | None = None):
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_mapping(
-        SECRET_KEY="dev",
         DATABASE=os.path.join(app.instance_path, "nodes.sqlite"),
         VALID_LANGUAGES=["italian", "english"],
         DEFAULT_PAGE_NUMBER=0,
