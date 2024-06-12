@@ -17,14 +17,23 @@ The project uses sqlite, so the only requirement is:
 ## Quickstart
 
 ```sh
-$ python3 -m venv .venv
-$ source .venv/bin/activate
-$ pip install -r requirements-dev.txt
-$ pre-commit install
-$ flask --app nodes run --debug
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements-dev.txt
+pre-commit install
+flask --app nodes run --debug
 ```
 >Go to the browser and try a sample API call like:
 `http://127.0.0.1:5000/api/nodes/5/children?language=italian`
+
+## Docker
+
+```sh
+docker pull andreafspeziale/nodes-app
+docker run -p 8000:8000 --rm andreafspeziale/nodes-app
+```
+>Go to the browser and try a sample API call like:
+`http://127.0.0.1:8000/api/nodes/5/children?language=italian`
 
 ### Development
 
