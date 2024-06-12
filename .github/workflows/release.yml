@@ -1,9 +1,8 @@
 name: Release
 on:
-  # push:
-  #   branches:
-  #     - main
-  workflow_dispatch:
+  push:
+    branches:
+      - main
 jobs:
   release:
     runs-on: ubuntu-latest
@@ -23,4 +22,8 @@ jobs:
           git_committer_name: ${{ secrets.CI_GITHUB_USER }}
           git_committer_email: ${{ secrets.CI_GITHUB_EMAIL }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
-      # TODO: align develop
+      - name: Update develop
+        run: |
+          git checkout develop
+          git rebase main
+          git push
