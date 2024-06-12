@@ -1,0 +1,33 @@
+name: Docker build and push
+on:
+  workflow_run:
+    workflows: ["Release"]
+    types:
+      - completed
+  workflow_dispatch:
+jobs:
+  docker-build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Get tag
+        run: echo "TAG=$(git tag --sort=-creatordate | head -1)" >> $GITHUB_ENV
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.CI_DOCKERHUB_USERNAME }}
+          password: ${{ secrets.CI_DOCKERHUB_TOKEN }}
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          push: true
+          platforms: linux/amd64,linux/arm64/v8
+          tags: ${{ secrets.CI_DOCKERHUB_USERNAME }}/nodes-app:${{ env.TAG }}, ${{ secrets.CI_DOCKERHUB_USERNAME }}/nodes-app:latest
+          cache-from: type=registry,ref=${{ secrets.CI_DOCKERHUB_USERNAME }}/nodes-app:buildcache
+          cache-to: type=registry,ref=${{ secrets.CI_DOCKERHUB_USERNAME }}/nodes-app:buildcache,mode=max
