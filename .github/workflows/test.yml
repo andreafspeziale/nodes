@@ -16,7 +16,7 @@ jobs:
           python-version: '3.10.5'
           cache: 'pip'
       - name: Install dependencies
-        run: pip install -r requirements-dev.txt -r requirements.txt
+        run: pip install -r requirements-dev.txt
       - name: Type checking
         run: mypy
       - name: Formatting check

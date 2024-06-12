@@ -16,7 +16,6 @@ setup(
             "pytest==8.2.1",
             "black==24.4.2",
             "pylint==3.2.2",
-            "python-semantic-release==9.8.1",
             "pre-commit==3.7.1",
         ],
     },
